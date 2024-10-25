@@ -1,0 +1,568 @@
+SYNC()                                                                  SYNC()
+
+
+
+[1mNAME[0m
+       sync -
+
+[1mDESCRIPTION[0m
+       Syncs  directories  and S3 prefixes. Recursively copies new and updated
+       files from the source directory to the destination. Only creates  fold-
+       ers in the destination if they contain one or more files.
+
+[1mSYNOPSIS[0m
+            sync
+          <LocalPath> <S3Uri> or <S3Uri> <LocalPath> or <S3Uri> <S3Uri>
+          [--dryrun]
+          [--quiet]
+          [--include <value>]
+          [--exclude <value>]
+          [--acl <value>]
+          [--follow-symlinks | --no-follow-symlinks]
+          [--no-guess-mime-type]
+          [--sse <value>]
+          [--sse-c <value>]
+          [--sse-c-key <value>]
+          [--sse-kms-key-id <value>]
+          [--sse-c-copy-source <value>]
+          [--sse-c-copy-source-key <value>]
+          [--storage-class <value>]
+          [--grants <value> [<value>...]]
+          [--website-redirect <value>]
+          [--content-type <value>]
+          [--cache-control <value>]
+          [--content-disposition <value>]
+          [--content-encoding <value>]
+          [--content-language <value>]
+          [--expires <value>]
+          [--source-region <value>]
+          [--only-show-errors]
+          [--no-progress]
+          [--page-size <value>]
+          [--ignore-glacier-warnings]
+          [--force-glacier-transfer]
+          [--request-payer <value>]
+          [--checksum-mode <value>]
+          [--checksum-algorithm <value>]
+          [--metadata <value>]
+          [--copy-props <value>]
+          [--metadata-directive <value>]
+          [--size-only]
+          [--exact-timestamps]
+          [--delete]
+          [--debug]
+          [--endpoint-url <value>]
+          [--no-verify-ssl]
+          [--no-paginate]
+          [--output <value>]
+          [--query <value>]
+          [--profile <value>]
+          [--region <value>]
+          [--version <value>]
+          [--color <value>]
+          [--no-sign-request]
+          [--ca-bundle <value>]
+          [--cli-read-timeout <value>]
+          [--cli-connect-timeout <value>]
+          [--cli-binary-format <value>]
+          [--no-cli-pager]
+          [--cli-auto-prompt]
+          [--no-cli-auto-prompt]
+
+[1mOPTIONS[0m
+       [1mpaths [22m(string)
+
+       [1m--dryrun  [22m(boolean)  Displays  the  operations  that would be performed
+       using the specified command without actually running them.
+
+       [1m--quiet [22m(boolean) Does not display the operations  performed  from  the
+       specified command.
+
+       [1m--include  [22m(string)  Don't exclude files or objects in the command that
+       match the specified pattern. See [4mUse[24m [4mof[24m [4mExclude[24m [4mand[24m [4mInclude[24m [4mFilters[24m for
+       details.
+
+       [1m--exclude  [22m(string)  Exclude all files or objects from the command that
+       matches the specified pattern.
+
+       [1m--acl [22m(string) Sets the ACL for the object when  the  command  is  per-
+       formed.  If  you use this parameter you must have the "s3:PutObjectAcl"
+       permission included in the list of actions for your  IAM  policy.  Only
+       accepts  values  of  [1mprivate[22m, [1mpublic-read[22m, [1mpublic-read-write[22m, [1mauthenti-[0m
+       [1mcated-read[22m, [1maws-exec-read[22m, [1mbucket-owner-read[22m, [1mbucket-owner-full-control[0m
+       and [1mlog-delivery-write[22m. See [4mCanned[24m [4mACL[24m for details
+
+       [1m--follow-symlinks  [22m|  [1m--no-follow-symlinks [22m(boolean) Symbolic links are
+       followed only when uploading to S3 from the local filesystem. Note that
+       S3  does not support symbolic links, so the contents of the link target
+       are uploaded under the name of the link. When neither [1m--follow-symlinks[0m
+       nor  [1m--no-follow-symlinks  [22mis  specified, the default is to follow sym-
+       links.
+
+       [1m--no-guess-mime-type [22m(boolean) Do not try to guess the  mime  type  for
+       uploaded  files.  By default the mime type of a file is guessed when it
+       is uploaded.
+
+       [1m--sse [22m(string) Specifies server-side encryption of the  object  in  S3.
+       Valid  values are [1mAES256 [22mand [1maws:kms[22m. If the parameter is specified but
+       no value is provided, [1mAES256 [22mis used.
+
+       [1m--sse-c [22m(string) Specifies server-side encryption using  customer  pro-
+       vided  keys of the the object in S3. [1mAES256 [22mis the only valid value. If
+       the parameter is specified but no value is provided, [1mAES256 [22mis used. If
+       you provide this value, [1m--sse-c-key [22mmust be specified as well.
+
+       [1m--sse-c-key  [22m(blob)  The  customer-provided  encryption  key  to use to
+       server-side encrypt the object  in  S3.  If  you  provide  this  value,
+       [1m--sse-c  [22mmust  be  specified  as  well.  The key provided should [1mnot [22mbe
+       base64 encoded.
+
+       [1m--sse-kms-key-id [22m(string) The customer-managed AWS Key Management  Ser-
+       vice (KMS) key ID that should be used to server-side encrypt the object
+       in S3. You should only provide this parameter if you are using  a  cus-
+       tomer  managed  customer  master  key (CMK) and not the AWS managed KMS
+       CMK.
+
+       [1m--sse-c-copy-source [22m(string) This parameter should  only  be  specified
+       when  copying  an  S3 object that was encrypted server-side with a cus-
+       tomer-provided key. It specifies the algorithm to use  when  decrypting
+       the  source object. [1mAES256 [22mis the only valid value. If the parameter is
+       specified but no value is provided, [1mAES256 [22mis used. If you provide this
+       value, [1m--sse-c-copy-source-key [22mmust be specified as well.
+
+       [1m--sse-c-copy-source-key  [22m(blob) This parameter should only be specified
+       when copying an S3 object that was encrypted server-side  with  a  cus-
+       tomer-provided  key. Specifies the customer-provided encryption key for
+       Amazon S3 to use to decrypt the source object. The encryption key  pro-
+       vided  must be one that was used when the source object was created. If
+       you provide this value, [1m--sse-c-copy-source [22mbe specified as  well.  The
+       key provided should [1mnot [22mbe base64 encoded.
+
+       [1m--storage-class  [22m(string)  The  type  of storage to use for the object.
+       Valid choices are: STANDARD | REDUCED_REDUNDANCY | STANDARD_IA  |  ONE-
+       ZONE_IA  |  INTELLIGENT_TIERING  | GLACIER | DEEP_ARCHIVE | GLACIER_IR.
+       Defaults to 'STANDARD'
+
+       [1m--grants [22m(string)
+          Grant specific permissions to individual users or  groups.  You  can
+          supply a list of grants of the form
+
+              --grants Permission=Grantee_Type=Grantee_ID [Permission=Grantee_Type=Grantee_ID ...]
+
+          To  specify  the same permission type for multiple grantees, specify
+          the permission as such as
+
+              --grants Permission=Grantee_Type=Grantee_ID,Grantee_Type=Grantee_ID,...
+
+          Each value contains the following elements:
+
+          +o [1mPermission [22m- Specifies the granted permissions, and can be set  to
+            read, readacl, writeacl, or full.
+
+          +o [1mGrantee_Type  [22m- Specifies how the grantee is to be identified, and
+            can be set to uri or id.
+
+          +o [1mGrantee_ID [22m- Specifies the  grantee  based  on  Grantee_Type.  The
+            [1mGrantee_ID [22mvalue can be one of:
+
+            +o [1muri  [22m-  The  group's  URI.  For  more  information, see [4mWho[24m [4mIs[24m [4ma[0m
+              [4mGrantee?[0m
+
+            +o [1mid [22m- The account's canonical ID
+
+          For more information on Amazon S3 access control, see [4mAccess[24m [4mControl[0m
+
+       [1m--website-redirect [22m(string) If the bucket is configured as  a  website,
+       redirects requests for this object to another object in the same bucket
+       or to an external URL. Amazon S3 stores the value of this header in the
+       object metadata.
+
+       [1m--content-type [22m(string) Specify an explicit content type for this oper-
+       ation. This value overrides any guessed mime types.
+
+       [1m--cache-control  [22m(string)  Specifies   caching   behavior   along   the
+       request/reply chain.
+
+       [1m--content-disposition [22m(string) Specifies presentational information for
+       the object.
+
+       [1m--content-encoding [22m(string) Specifies what content encodings have  been
+       applied to the object and thus what decoding mechanisms must be applied
+       to obtain the media-type referenced by the Content-Type header field.
+
+       [1m--content-language [22m(string) The language the content is in.
+
+       [1m--expires [22m(string) The date and time at which the object is  no  longer
+       cacheable.
+
+       [1m--source-region [22m(string) When transferring objects from an s3 bucket to
+       an s3 bucket, this specifies the region of the source bucket. Note  the
+       region specified by [1m--region [22mor through configuration of the CLI refers
+       to the region of the destination  bucket.  If  [1m--source-region  [22mis  not
+       specified  the  region  of the source will be the same as the region of
+       the destination bucket.
+
+       [1m--only-show-errors [22m(boolean) Only errors and  warnings  are  displayed.
+       All other output is suppressed.
+
+       [1m--no-progress  [22m(boolean)  File transfer progress is not displayed. This
+       flag is only applied when the quiet and only-show-errors flags are  not
+       provided.
+
+       [1m--page-size  [22m(integer) The number of results to return in each response
+       to a list operation. The default value is 1000 (the  maximum  allowed).
+       Using a lower value may help if an operation times out.
+
+       [1m--ignore-glacier-warnings  [22m(boolean)  Turns off glacier warnings. Warn-
+       ings about an operation that cannot be performed  because  it  involves
+       copying,  downloading,  or  moving  a  glacier object will no longer be
+       printed to standard error and will no longer cause the return  code  of
+       the command to be [1m2[22m.
+
+       [1m--force-glacier-transfer  [22m(boolean)  Forces  a  transfer request on all
+       Glacier objects in a sync or recursive copy.
+
+       [1m--request-payer [22m(string) Confirms that the requester  knows  that  they
+       will  be  charged  for the request. Bucket owners need not specify this
+       parameter in their requests. Documentation on downloading objects  from
+       requester       pays       buckets       can      be      found      at
+       [4mhttp://docs.aws.amazon.com/AmazonS3/latest/dev/ObjectsinRequesterPaysBuckets.html[0m
+
+       [1m--checksum-mode  [22m(string)  To  retrieve the checksum, this mode must be
+       enabled. If the object has a checksum, it will be verified.
+
+       [1m--checksum-algorithm [22m(string) Indicates the algorithm  used  to  create
+       the checksum for the object.
+
+       [1m--metadata  [22m(map)  A  map  of metadata to store with the objects in S3.
+       This will be applied to every object which is part of this request.  In
+       a  sync,  this means that files which haven't changed won't receive the
+       new metadata. key -> (string)
+          value -> (string)
+
+       Shorthand Syntax:
+
+          KeyName1=string,KeyName2=string
+
+       JSON Syntax:
+
+          {"string": "string"
+            ...}
+
+       [1m--copy-props [22m(string) Determines which properties are copied  from  the
+       source  S3  object.  This  parameter  only applies for S3 to S3 copies.
+       Valid values are:
+
+          +o [1mnone [22m- Do not copy any  of  the  properties  from  the  source  S3
+            object.
+
+          +o [1mmetadata-directive  [22m-  Copies  the  following  properties from the
+            source S3 object: [1mcontent-type[22m,  [1mcontent-language[22m,  [1mcontent-encod-[0m
+            [1ming[22m, [1mcontent-disposition[22m, [1mcache-control[22m, [1m--expires[22m, and [1mmetadata[0m
+
+          +o [1mdefault  [22m-  The  default value. Copies tags and properties covered
+            under the [1mmetadata-directive [22mvalue from the source S3 object.
+
+          In order to copy the appropriate properties  for  multipart  copies,
+          some  of the options may require additional API calls if a multipart
+          copy is involved. Specifically:
+
+          +o [1mmetadata-directive [22mmay require additional [1mHeadObject [22mAPI calls.
+
+          +o [1mdefault [22mmay require additional [1mHeadObject[22m,  [1mGetObjectTagging[22m,  and
+            [1mPutObjectTagging  [22mAPI  calls. Note this list of API calls may grow
+            in the future in order to ensure  multipart  copies  preserve  the
+            exact properties a [1mCopyObject [22mAPI call would preserve.
+
+          If you want to guarantee no additional API calls are made other than
+          than the ones needed to perform the actual copy, set this option  to
+          [1mnone[22m.
+
+       [1m--metadata-directive  [22m(string) Sets the [1mx-amz-metadata-directive [22mheader
+       for CopyObject operations. It is recommended to  use  the  [1m--copy-props[0m
+       parameter instead to control copying of metadata properties. If [1m--meta-[0m
+       [1mdata-directive [22mis set, the [1m--copy-props [22mparameter will be disabled  and
+       will have no affect on the transfer.
+
+       [1m--size-only [22m(boolean) Makes the size of each key the only criteria used
+       to decide whether to sync from source to destination.
+
+       [1m--exact-timestamps [22m(boolean) When syncing from S3 to local,  same-sized
+       items  will  be  ignored  only  when  the timestamps match exactly. The
+       default behavior is to ignore same-sized items unless the local version
+       is newer than the S3 version.
+
+       [1m--delete  [22m(boolean)  Files that exist in the destination but not in the
+       source are deleted during sync. Note that files excluded by filters are
+       excluded from deletion.
+
+[1mGLOBAL OPTIONS[0m
+       [1m--debug [22m(boolean)
+
+       Turn on debug logging.
+
+       [1m--endpoint-url [22m(string)
+
+       Override command's default URL with the given URL.
+
+       [1m--no-verify-ssl [22m(boolean)
+
+       By  default, the AWS CLI uses SSL when communicating with AWS services.
+       For each SSL connection, the AWS CLI will verify SSL certificates. This
+       option overrides the default behavior of verifying SSL certificates.
+
+       [1m--no-paginate [22m(boolean)
+
+       Disable  automatic pagination. If automatic pagination is disabled, the
+       AWS CLI will only make one call, for the first page of results.
+
+       [1m--output [22m(string)
+
+       The formatting style for command output.
+
+       +o json
+
+       +o text
+
+       +o table
+
+       +o yaml
+
+       +o yaml-stream
+
+       [1m--query [22m(string)
+
+       A JMESPath query to use in filtering the response data.
+
+       [1m--profile [22m(string)
+
+       Use a specific profile from your credential file.
+
+       [1m--region [22m(string)
+
+       The region to use. Overrides config/env settings.
+
+       [1m--version [22m(string)
+
+       Display the version of this tool.
+
+       [1m--color [22m(string)
+
+       Turn on/off color output.
+
+       +o on
+
+       +o off
+
+       +o auto
+
+       [1m--no-sign-request [22m(boolean)
+
+       Do not sign requests. Credentials will not be loaded if  this  argument
+       is provided.
+
+       [1m--ca-bundle [22m(string)
+
+       The CA certificate bundle to use when verifying SSL certificates. Over-
+       rides config/env settings.
+
+       [1m--cli-read-timeout [22m(int)
+
+       The maximum socket read time in seconds. If the value is set to 0,  the
+       socket  read  will be blocking and not timeout. The default value is 60
+       seconds.
+
+       [1m--cli-connect-timeout [22m(int)
+
+       The maximum socket connect time in seconds. If the value is set  to  0,
+       the  socket connect will be blocking and not timeout. The default value
+       is 60 seconds.
+
+       [1m--cli-binary-format [22m(string)
+
+       The formatting style to be used for binary blobs. The default format is
+       base64.  The  base64  format  expects  binary blobs to be provided as a
+       base64 encoded string. The raw-in-base64-out format preserves  compati-
+       bility with AWS CLI V1 behavior and binary values must be passed liter-
+       ally. When providing contents from a file that map  to  a  binary  blob
+       [1mfileb://  [22mwill  always  be  treated as binary and use the file contents
+       directly  regardless  of  the  [1mcli-binary-format  [22msetting.  When  using
+       [1mfile://  [22mthe file contents will need to properly formatted for the con-
+       figured [1mcli-binary-format[22m.
+
+       +o base64
+
+       +o raw-in-base64-out
+
+       [1m--no-cli-pager [22m(boolean)
+
+       Disable cli pager for output.
+
+       [1m--cli-auto-prompt [22m(boolean)
+
+       Automatically prompt for CLI input parameters.
+
+       [1m--no-cli-auto-prompt [22m(boolean)
+
+       Disable automatically prompt for CLI input parameters.
+
+[1mEXAMPLES[0m
+       [1mNOTE:[0m
+          To use the following examples, you must have the AWS  CLI  installed
+          and  configured.  See  the [4mGetting[24m [4mstarted[24m [4mguide[24m in the [4mAWS[24m [4mCLI[24m [4mUser[0m
+          [4mGuide[24m for more information.
+
+          Unless otherwise  stated,  all  examples  have  unix-like  quotation
+          rules.  These  examples  will  need to be adapted to your terminal's
+          quoting rules. See [4mUsing[24m [4mquotation[24m [4mmarks[24m [4mwith[24m [4mstrings[24m in the [4mAWS[24m [4mCLI[0m
+          [4mUser[24m [4mGuide[24m .
+
+       [1mExample 1: Sync all local objects to the specified bucket[0m
+
+       The  following [1msync [22mcommand syncs objects from a local directory to the
+       specified prefix and bucket by uploading the  local  files  to  S3.   A
+       local file will require uploading if the size of the local file is dif-
+       ferent than the size of the S3 object, the last modified  time  of  the
+       local  file  is  newer than the last modified time of the S3 object, or
+       the local file does not exist under the specified  bucket  and  prefix.
+       In  this  example, the user syncs the bucket [1mmybucket [22mto the local cur-
+       rent  directory.   The  local  current  directory  contains  the  files
+       [1mtest.txt [22mand [1mtest2.txt[22m.  The bucket [1mmybucket [22mcontains no objects.
+
+          aws s3 sync . s3://mybucket
+
+       Output:
+
+          upload: test.txt to s3://mybucket/test.txt
+          upload: test2.txt to s3://mybucket/test2.txt
+
+       [1mExample  2: Sync all S3 objects from the specified S3 bucket to another[0m
+       [1mbucket[0m
+
+       The following [1msync [22mcommand syncs objects under a specified  prefix  and
+       bucket  to objects under another specified prefix and bucket by copying
+       S3 objects. An S3 object will require copying if the sizes of  the  two
+       S3  objects  differ, the last modified time of the source is newer than
+       the last modified time of the destination, or the S3  object  does  not
+       exist under the specified bucket and prefix destination.
+
+       In  this  example,  the  user  syncs  the bucket [1mmybucket [22mto the bucket
+       [1mmybucket2[22m. The  bucket  [1mmybucket  [22mcontains  the  objects  [1mtest.txt  [22mand
+       [1mtest2.txt[22m. The bucket [1mmybucket2 [22mcontains no objects:
+
+          aws s3 sync s3://mybucket s3://mybucket2
+
+       Output:
+
+          copy: s3://mybucket/test.txt to s3://mybucket2/test.txt
+          copy: s3://mybucket/test2.txt to s3://mybucket2/test2.txt
+
+       [1mExample  3:  Sync  all  S3  objects from the specified S3 bucket to the[0m
+       [1mlocal directory[0m
+
+       The following [1msync [22mcommand syncs files from the specified S3 bucket  to
+       the  local  directory  by  downloading  S3  objects.  An S3 object will
+       require downloading if the size of the S3 object differs from the  size
+       of  the  local  file,  the last modified time of the S3 object is newer
+       than the last modified time of the local file, or the  S3  object  does
+       not exist in the local directory. Take note that when objects are down-
+       loaded from S3, the last modified time of the local file is changed  to
+       the  last  modified  time  of  the S3 object. In this example, the user
+       syncs the bucket [1mmybucket [22mto the current local  directory.  The  bucket
+       [1mmybucket  [22mcontains  the  objects  [1mtest.txt  [22mand [1mtest2.txt[22m.  The current
+       local directory has no files:
+
+          aws s3 sync s3://mybucket .
+
+       Output:
+
+          download: s3://mybucket/test.txt to test.txt
+          download: s3://mybucket/test2.txt to test2.txt
+
+       [1mExample 4: Sync all local objects to the specified  bucket  and  delete[0m
+       [1mall files that do not match[0m
+
+       The  following  [1msync [22mcommand syncs objects under a specified prefix and
+       bucket to files in a local directory by uploading the  local  files  to
+       S3.   Because  of  the [1m--delete [22mparameter, any files existing under the
+       specified prefix and bucket but not existing  in  the  local  directory
+       will  be  deleted.  In this example, the user syncs the bucket [1mmybucket[0m
+       to the local current directory.  The local current  directory  contains
+       the  files  [1mtest.txt  [22mand  [1mtest2.txt[22m.  The bucket [1mmybucket [22mcontains the
+       object [1mtest3.txt[22m:
+
+          aws s3 sync . s3://mybucket \
+              --delete
+
+       Output:
+
+          upload: test.txt to s3://mybucket/test.txt
+          upload: test2.txt to s3://mybucket/test2.txt
+          delete: s3://mybucket/test3.txt
+
+       [1mExample 5: Sync all  local  objects  to  the  specified  bucket  except[0m
+       [1m``.jpg`` files[0m
+
+       The  following  [1msync [22mcommand syncs objects under a specified prefix and
+       bucket to files in a local directory by uploading the  local  files  to
+       S3.  Because of the [1m--exclude [22mparameter, all files matching the pattern
+       existing both in S3 and locally will be excluded from the sync. In this
+       example, the user syncs the bucket [1mmybucket [22mto the local current direc-
+       tory.  The local current directory  contains  the  files  [1mtest.jpg  [22mand
+       [1mtest2.txt[22m.   The bucket [1mmybucket [22mcontains the object [1mtest.jpg [22mof a dif-
+       ferent size than the local [1mtest.jpg[22m:
+
+          aws s3 sync . s3://mybucket \
+              --exclude "*.jpg"
+
+       Output:
+
+          upload: test2.txt to s3://mybucket/test2.txt
+
+       [1mExample 6: Sync all  local  objects  to  the  specified  bucket  except[0m
+       [1m``.jpg`` files[0m
+
+       The  following  [1msync  [22mcommand  syncs  files  under a local directory to
+       objects under a specified prefix and bucket by downloading S3  objects.
+       This  example  uses the [1m--exclude [22mparameter flag to exclude a specified
+       directory and S3 prefix from the [1msync [22mcommand.  In  this  example,  the
+       user  syncs  the  local  current directory to the bucket [1mmybucket[22m.  The
+       local   current   directory   contains   the   files    [1mtest.txt    [22mand
+       [1manother/test2.txt[22m.    The   bucket   [1mmybucket   [22mcontains   the  objects
+       [1manother/test5.txt [22mand [1mtest1.txt[22m:
+
+          aws s3 sync s3://mybucket/ . \
+              --exclude "*another/*"
+
+       Output:
+
+          download: s3://mybucket/test1.txt to test1.txt
+
+       [1mExample 7: Sync all objects between buckets in different regions[0m
+
+       The following [1msync [22mcommand syncs files between two buckets in different
+       regions:
+
+          aws s3 sync s3://my-us-west-2-bucket s3://my-us-east-1-bucket \
+              --source-region us-west-2 \
+              --region us-east-1
+
+       Output:
+
+          download: s3://my-us-west-2-bucket/test1.txt to s3://my-us-east-1-bucket/test1.txt
+
+       [1mExample 8: Sync to an S3 access point[0m
+
+       The  following  [1msync  [22mcommand syncs the current directory to the access
+       point ([1mmyaccesspoint[22m):
+
+          aws s3 sync . s3://arn:aws:s3:us-west-2:123456789012:accesspoint/myaccesspoint/
+
+       Output:
+
+          upload: test.txt to s3://arn:aws:s3:us-west-2:123456789012:accesspoint/myaccesspoint/test.txt
+          upload: test2.txt to s3://arn:aws:s3:us-west-2:123456789012:accesspoint/myaccesspoint/test2.txt
+
+
+
+                                                                        SYNC()
